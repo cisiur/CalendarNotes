@@ -49,4 +49,15 @@ The shell uses bottom navigation on narrow displays and a navigation rail from
 700 logical pixels. Its four Polish destinations are Kalendarz, Wpisy,
 Szablony and Ustawienia. They are intentional placeholders, not journal CRUD.
 
+## Exchange-folder diagnostic (CN-02)
+
+**Ustawienia** contains a developer-only diagnostic for a separately selected
+exchange folder. Windows uses a normal user-selected directory; Android uses
+the system SAF document-tree picker and stores only its persisted `content://`
+URI. It can create a unique non-personal test payload, list/read/verify its
+SHA-256, reopen the selection after restart and explicitly remove only its own
+test files. It is not synchronization and never selects or copies a database.
+
+See [exchange-folder feasibility evidence and the required device checklist](docs/10_SYNC_FOLDER_FEASIBILITY.md).
+
 Never commit private notes, synchronized event payloads or a database into source control.

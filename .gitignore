@@ -18,6 +18,11 @@ coverage/
 *.bak
 *.backup
 data/
+# Dart source folders may legitimately be named data; never ignore them.
+!lib/data/
+!lib/data/**
+!test/data/
+!test/data/**
 user-data/
 sync-exchange/
 exports/

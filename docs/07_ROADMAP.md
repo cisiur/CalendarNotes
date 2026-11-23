@@ -2,7 +2,7 @@
 Codex tasks are scoped and sequential; each task reports HEAD/baseline/tests/final SHA and updates context.
 ## E0 Foundation
 - **CN-01 [DONE]** Flutter bootstrap + Android/Windows shells, navigation, domain skeleton, tests, basic CI. See `tasks/CN-01_BOOTSTRAP.md`.
-- **CN-02 [NEXT]** Windows and real Android exchange-folder/SAF proof of concept, Syncthing-Fork interoperability and fallback.
+- **CN-02 [IMPLEMENTED — HARDWARE VERIFICATION BLOCKED]** Windows directory and Android SAF diagnostic adapter; run the device/Syncthing checklist in `docs/10_SYNC_FOLDER_FEASIBILITY.md` before GO.
 - CN-03 Drift SQLite data schema/migrations and transactional outbox.
 - CN-04 Event envelope, importer, parent-revision concurrency/conflict engine and integration tests.
 ## E1 Journal core
