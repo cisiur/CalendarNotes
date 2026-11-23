@@ -1,6 +1,9 @@
 # CalendarNotes — project context
 Updated: 2026-11-23.
-Current state: design documents and first Codex task prepared. App itself, Flutter platform scaffold, database, synchronization and CI are **not yet implemented**.
+Current state: CN-01 Flutter scaffold is implemented: Android application ID
+`dev.cisiur.calendarnotes`, native Windows runner, Polish adaptive shell,
+universal typed domain types, smoke tests and GitHub Actions analysis/test CI.
+Database, synchronization, exports and journal CRUD are **not implemented**.
 ## Scope
 Private personal journal: Android + Windows, reusable note templates, multiple entries per calendar day, date-based calendar/list, exports to external analytics. Offline-first and no server.
 ## Decisions
@@ -9,4 +12,7 @@ Templates and field definitions versioned; stable UUIDs. No silent overwrites in
 ## Open investigation
 Android Scoped Storage/SAF folder interoperability with chosen sync transport on real hardware; exact Flutter/package versions; optional OneDrive third-party sync adapter. Validate before claiming automatic synchronization.
 ## Next task
-`tasks/CN-01_BOOTSTRAP.md`, then Android/Windows sync-folder proof-of-concept CN-02.
+`tasks/CN-02_SYNC_FOLDER_POC.md` (when supplied): Android/Windows exchange-folder
+and SAF proof of concept. The CN-01 environment did not contain Flutter/Dart,
+so local analysis, tests and platform smoke tests still need execution on the
+pinned toolchain.

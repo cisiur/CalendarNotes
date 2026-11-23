@@ -1,7 +1,9 @@
 # CalendarNotes
 Offline-first personal calendar and structured journal for Android and Windows, using one Flutter application.
 
-**Project status:** specification and development roadmap; application implementation begins with CN-01.
+**Project status:** CN-01 bootstrap complete. The adaptive shell and universal
+domain model are present; persistence, synchronization, exports and journal UI
+remain deliberately out of scope until later tasks.
 
 ## Capabilities planned
 - Date-based entries in calendar and list; multiple entries per day.
@@ -27,6 +29,24 @@ Offline-first personal calendar and structured journal for Android and Windows, 
 - [Project state](CONTEXT.md)
 
 ## Development
-Install Flutter stable, Android SDK and Windows desktop tooling. Codex CN-01 will generate the actual scaffold and pin supported packages. Planned commands: `flutter doctor -v`, `flutter analyze`, `flutter test`, `flutter run -d windows` and `flutter run -d <device>`.
+Install Flutter 3.29.3 (Dart 3.7.2), Android SDK with JDK 17, and Visual Studio
+with the **Desktop development with C++** workload. Then run:
+
+```powershell
+flutter doctor -v
+flutter pub get
+flutter analyze
+flutter test
+flutter run -d windows
+flutter run -d <android-device-id>
+```
+
+The Android application ID is `dev.cisiur.calendarnotes`. Dependency versions
+are explicitly declared in `pubspec.yaml`; run `flutter pub get` to create the
+tool-resolved `pubspec.lock` on a machine with the pinned SDK.
+
+The shell uses bottom navigation on narrow displays and a navigation rail from
+700 logical pixels. Its four Polish destinations are Kalendarz, Wpisy,
+Szablony and Ustawienia. They are intentional placeholders, not journal CRUD.
 
 Never commit private notes, synchronized event payloads or a database into source control.
