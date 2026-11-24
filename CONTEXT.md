@@ -4,6 +4,8 @@ Current state: CN-02 adds a developer-only exchange-folder diagnostic: a
 Windows user-selected directory adapter and Android SAF tree-URI adapter,
 write-once test artifacts, SHA-256 verification and own-artifact cleanup.
 It does not implement SQLite, event synchronization, exports or journal CRUD.
+CN-02-FIX replaces the unavailable exclusive-open mode with an exclusive file
+creation gate and validates real local calendar dates in every build mode.
 ## Scope
 Private personal journal: Android + Windows, reusable note templates, multiple entries per calendar day, date-based calendar/list, exports to external analytics. Offline-first and no server.
 ## Decisions

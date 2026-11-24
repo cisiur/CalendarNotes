@@ -26,7 +26,7 @@ class WindowsExchangeFolderAdapter implements ExchangeFolderAdapter {
         canRead: false,
         canWrite: false,
         canList: false,
-        supportsStagedRename: true,
+        supportsStagedRename: false,
         atomicRenameVerified: false,
         error: 'Nie wybrano folderu wymiany.',
       );

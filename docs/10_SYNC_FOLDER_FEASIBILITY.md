@@ -19,7 +19,7 @@ It cannot remove an unrelated file.
 
 | Platform | Selection/persistence | Operations | Publication finding |
 | --- | --- | --- | --- |
-| Windows | `file_selector` directory chooser; path in app preferences | list, exclusive test write, read/SHA-256 verify, own-test cleanup | writes a staging file then same-directory rename; this is an implementation test, not a claim of verified atomic publication across filesystem/sync-provider combinations. |
+| Windows | `file_selector` directory chooser; path in app preferences | list, exclusive test write, read/SHA-256 verify, own-test cleanup | uses an exclusive final-file create, so a concurrent same-name writer fails without overwrite. A crash can leave a truncated diagnostic file; SHA-256 verification rejects it. |
 | Android | Native `ACTION_OPEN_DOCUMENT_TREE`; URI permission via `takePersistableUriPermission`; URI in Android `SharedPreferences` | DocumentsContract list/create/read/SHA-256 verify/delete-own-test | SAF provider rename atomicity is **not assumed**; diagnostic creation is direct and is not a production publication protocol. |
 
 The Android implementation never converts `content://` to a filesystem path,

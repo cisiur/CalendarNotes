@@ -2,7 +2,6 @@ package dev.cisiur.calendarnotes
 
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
 import android.provider.DocumentsContract
 import android.provider.OpenableColumns
 import android.util.Base64

@@ -16,10 +16,17 @@ class JournalEntry {
   })  : assert(StableId.isValid(id)),
         assert(StableId.isValid(templateId)),
         assert(StableId.isValid(templateVersionId)),
-        assert(_isIsoLocalDate(localDate)),
         assert(createdAtUtc.isUtc),
         assert(updatedAtUtc.isUtc),
-        values = Map<String, FieldValue>.unmodifiable(values);
+        values = Map<String, FieldValue>.unmodifiable(values) {
+    if (!isValidLocalDate(localDate)) {
+      throw ArgumentError.value(
+        localDate,
+        'localDate',
+        'Musi być istniejącą datą w formacie YYYY-MM-DD.',
+      );
+    }
+  }
 
   final String id;
   final String templateId;
@@ -32,6 +39,18 @@ class JournalEntry {
   final DateTime updatedAtUtc;
   final DateTime? deletedAtUtc;
 
-  static bool _isIsoLocalDate(String value) =>
-      RegExp(r'^\\d{4}-\\d{2}-\\d{2}$').hasMatch(value);
+  static bool isValidLocalDate(String value) {
+    final RegExpMatch? match = RegExp(r'^(\d{4})-(\d{2})-(\d{2})$').firstMatch(value);
+    if (match == null) {
+      return false;
+    }
+    final int year = int.parse(match.group(1)!);
+    final int month = int.parse(match.group(2)!);
+    final int day = int.parse(match.group(3)!);
+    if (month < 1 || month > 12 || day < 1 || day > 31) {
+      return false;
+    }
+    final DateTime normalized = DateTime.utc(year, month, day);
+    return normalized.year == year && normalized.month == month && normalized.day == day;
+  }
 }

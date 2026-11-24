@@ -72,36 +72,24 @@ class FileSystemExchangeFolderAdapter implements ExchangeFolderAdapter {
     _verifyHash(contents, expectedSha256);
     await _requireAccess();
     final File destination = _fileFor(name);
-    if (await destination.exists()) {
-      throw ExchangeFolderException('Plik testowy już istnieje: $name');
-    }
-
-    final File staging = _fileFor('$name.staging-${const Uuid().v4()}');
     try {
-      final RandomAccessFile output = await staging.open(mode: FileMode.writeOnlyExclusive);
+      // `create(exclusive: true)` is the actual write-once gate. It combines
+      // the existence check and creation, so a concurrent writer cannot win
+      // between separate exists/create calls. The diagnostic may leave a
+      // truncated own artifact after a crash; hash verification rejects it.
+      await destination.create(exclusive: true);
+      final RandomAccessFile output = await destination.open(mode: FileMode.write);
       await output.writeFrom(contents);
       await output.flush();
       await output.close();
-
-      // The Windows implementation uses a same-directory move. It never asks
-      // the filesystem to replace a destination. Atomicity remains unverified
-      // until the manual Windows/Syncthing test is performed.
-      if (await destination.exists()) {
-        throw ExchangeFolderException('Plik testowy już istnieje: $name');
-      }
-      await staging.rename(destination.path);
     } on FileSystemException catch (error) {
       throw ExchangeFolderException('Nie można zapisać pliku testowego: ${error.message}');
-    } finally {
-      if (await staging.exists()) {
-        await staging.delete();
-      }
     }
     return ExchangeWriteResult(
       name: name,
       sizeBytes: contents.length,
       sha256: expectedSha256,
-      usedStagedRename: true,
+      usedStagedRename: false,
     );
   }
 
@@ -144,7 +132,7 @@ class FileSystemExchangeFolderAdapter implements ExchangeFolderAdapter {
         canRead: error == null,
         canWrite: error == null,
         canList: error == null,
-        supportsStagedRename: true,
+        supportsStagedRename: false,
         atomicRenameVerified: false,
         location: _directory.path,
         provider: 'Windows filesystem',

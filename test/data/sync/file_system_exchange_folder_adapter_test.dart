@@ -39,7 +39,7 @@ void main() {
       expectedSha256: hash,
     );
 
-    expect(write.usedStagedRename, isTrue);
+    expect(write.usedStagedRename, isFalse);
     expect(files.single.name, name);
     expect(read.hashMatches, isTrue);
     expect((await adapter.deleteOwnTestFile(name)).deleted, isTrue);
@@ -61,6 +61,30 @@ void main() {
       throwsA(isA<ExchangeFolderException>()),
     );
     expect(await File('${directory.path}${Platform.pathSeparator}$name').readAsBytes(), contents);
+  });
+
+  test('exclusive create keeps the first writer bytes during a write race', () async {
+    final Uint8List first = Uint8List.fromList(<int>[1, 1, 1]);
+    final Uint8List second = Uint8List.fromList(<int>[2, 2, 2]);
+    final String name = '${adapter.ownTestPrefix}race.json';
+
+    final List<Object> results = await Future.wait<Object>(<Future<Object>>[
+      adapter.writeOnce(
+        name: name,
+        contents: first,
+        expectedSha256: sha256.convert(first).toString(),
+      ).then<Object>((ExchangeWriteResult value) => value).catchError((Object error) => error),
+      adapter.writeOnce(
+        name: name,
+        contents: second,
+        expectedSha256: sha256.convert(second).toString(),
+      ).then<Object>((ExchangeWriteResult value) => value).catchError((Object error) => error),
+    ]);
+
+    expect(results.whereType<ExchangeWriteResult>(), hasLength(1));
+    expect(results.whereType<ExchangeFolderException>(), hasLength(1));
+    final List<int> stored = await File('${directory.path}${Platform.pathSeparator}$name').readAsBytes();
+    expect(stored, anyOf(first, second));
   });
 
   test('reports malformed input and a truncated artifact', () async {
