@@ -29,7 +29,7 @@ remain deliberately out of scope until later tasks.
 - [Project state](CONTEXT.md)
 
 ## Development
-Install Flutter 3.29.3 (Dart 3.7.2), Android SDK with JDK 17, and Visual Studio
+Install Flutter 3.50.1 (Dart 3.14.0), Android SDK with JDK 17, and Visual Studio
 with the **Desktop development with C++** workload. Then run:
 
 ```powershell
@@ -42,8 +42,8 @@ flutter run -d <android-device-id>
 ```
 
 The Android application ID is `dev.cisiur.calendarnotes`. Dependency versions
-are explicitly declared in `pubspec.yaml`; run `flutter pub get` to create the
-tool-resolved `pubspec.lock` on a machine with the pinned SDK.
+are explicitly declared in `pubspec.yaml`; commit the tool-resolved
+`pubspec.lock` after a deliberate dependency-resolution change.
 
 The shell uses bottom navigation on narrow displays and a navigation rail from
 700 logical pixels. Its four Polish destinations are Kalendarz, Wpisy,

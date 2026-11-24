@@ -1,9 +1,9 @@
 # 09 — Toolchain (CN-01)
 
-The initial scaffold targets Flutter stable **3.29.3** (Dart **3.7.2**) for
+The project targets Flutter stable **3.50.1** (Dart **3.14.0**) for
 Android and Windows. GitHub Actions installs that exact Flutter SDK; package
 versions are declared explicitly in `pubspec.yaml` and the resolution is
-recorded in `pubspec.lock` after `flutter pub get`.
+recorded in the version-controlled `pubspec.lock` after `flutter pub get`.
 
 Required local commands:
 
