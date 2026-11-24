@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:calendar_notes/core/ids/stable_id.dart';
 import 'package:calendar_notes/data/sync/android_saf_exchange_folder_adapter.dart';
 import 'package:calendar_notes/data/sync/exchange_folder_adapter.dart';
