@@ -84,7 +84,7 @@ void main() {
     expect(results.whereType<ExchangeWriteResult>(), hasLength(1));
     expect(results.whereType<ExchangeFolderException>(), hasLength(1));
     final List<int> stored = await File('${directory.path}${Platform.pathSeparator}$name').readAsBytes();
-    expect(stored, anyOf(first, second));
+    expect(stored, anyOf(orderedEquals(first), orderedEquals(second)));
   });
 
   test('reports malformed input and a truncated artifact', () async {
